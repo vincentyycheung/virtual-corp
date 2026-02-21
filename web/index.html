@@ -8,65 +8,132 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
       min-height: 100vh;
       color: #fff;
       padding: 20px;
     }
-    .container { max-width: 800px; margin: 0 auto; }
-    h1 { text-align: center; margin-bottom: 30px; font-size: 2.5em; }
+    .container { max-width: 600px; margin: 0 auto; }
+    
+    h1 { text-align: center; margin-bottom: 10px; font-size: 2em; }
     h1 span { color: #f39c12; }
+    .subtitle { text-align: center; color: #888; margin-bottom: 30px; }
     
     .card {
-      background: rgba(255,255,255,0.1);
-      border-radius: 16px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
       padding: 20px;
       margin-bottom: 20px;
       backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
     }
     
-    .industry { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .card h2 { margin-bottom: 15px; font-size: 1.1em; color: #f39c12; }
+    
+    .industry { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .industry:hover { background: rgba(255,255,255,0.05); }
     .industry:last-child { border-bottom: none; }
-    .name { font-size: 1.2em; font-weight: bold; }
-    .index { font-size: 1.5em; color: #f39c12; }
-    .risk { padding: 4px 12px; border-radius: 12px; font-size: 0.8em; }
-    .risk.high { background: #e74c3c; }
-    .risk.medium { background: #f39c12; }
-    .risk.low { background: #27ae60; }
+    .ind-name { font-weight: 500; }
+    .ind-index { font-size: 1.3em; color: #f39c12; font-weight: bold; }
+    .ind-risk { 
+      padding: 3px 10px; 
+      border-radius: 10px; 
+      font-size: 0.75em;
+    }
+    .risk-high { background: #e74c3c; }
+    .risk-medium { background: #f39c12; }
+    .risk-low { background: #27ae60; }
     
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-    .stat { text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; }
-    .stat-value { font-size: 2em; color: #f39c12; }
-    .stat-label { color: #888; margin-top: 5px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .stat { 
+      text-align: center; 
+      padding: 15px 10px; 
+      background: rgba(255,255,255,0.05); 
+      border-radius: 12px; 
+    }
+    .stat-value { font-size: 1.4em; color: #f39c12; font-weight: bold; }
+    .stat-label { color: #888; font-size: 0.8em; margin-top: 5px; }
     
-    .invest-btn {
-      display: block;
+    .invest-form { margin-top: 15px; }
+    .form-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    select, input { 
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 1em;
+    }
+    select option { background: #302b63; }
+    
+    .btn {
       width: 100%;
-      padding: 16px;
+      padding: 14px;
       background: linear-gradient(135deg, #f39c12, #e67e22);
       border: none;
       border-radius: 12px;
       color: #fff;
-      font-size: 1.2em;
+      font-size: 1em;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(243,156,18,0.3); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    .result { 
+      margin-top: 15px; 
+      padding: 15px; 
+      background: rgba(39,174,96,0.2); 
+      border-radius: 10px;
+      display: none;
+    }
+    .result.show { display: block; }
+    .result pre { 
+      font-size: 0.7em; 
+      word-break: break-all; 
+      background: rgba(0,0,0,0.3);
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
     }
     
-    .footer { text-align: center; margin-top: 30px; color: #666; }
+    .footer { text-align: center; margin-top: 30px; color: #666; font-size: 0.8em; }
+    
+    .loading { text-align: center; color: #888; padding: 20px; }
+    .refresh { 
+      text-align: center; 
+      margin-bottom: 20px; 
+      color: #666; 
+      font-size: 0.8em; 
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>⚡ 虚拟电厂 <span>VPP</span></h1>
+    <p class="subtitle">分布式能源投资系统</p>
+    
+    <div class="refresh">点击指数刷新数据</div>
     
     <div class="card">
-      <h2>能源指数</h2>
-      <div id="indices">加载中...</div>
+      <h2>📊 能源指数</h2>
+      <div id="indices">
+        <div class="loading">加载中...</div>
+      </div>
     </div>
     
     <div class="card">
-      <h2>系统统计</h2>
+      <h2>📈 系统统计</h2>
       <div class="stats">
         <div class="stat">
           <div class="stat-value" id="investors">-</div>
@@ -74,60 +141,103 @@
         </div>
         <div class="stat">
           <div class="stat-value" id="invested">-</div>
-          <div class="stat-label">总投资 (sats)</div>
+          <div class="stat-label">总投资(sats)</div>
         </div>
         <div class="stat">
           <div class="stat-value" id="revenue">-</div>
-          <div class="stat-label">日收益 ($)</div>
+          <div class="stat-label">日收益($)</div>
         </div>
       </div>
     </div>
     
-    <button class="invest-btn" onclick="alert('Lightning支付功能开发中...')">
-      ⚡ 立即投资 (Lightning)
-    </button>
+    <div class="card">
+      <h2>⚡ 投资</h2>
+      <div class="invest-form">
+        <div class="form-row">
+          <select id="industry">
+            <option value="solar">☀️ 虚拟太阳能</option>
+            <option value="storage">🔋 虚拟储能</option>
+            <option value="demand">⚡ 虚拟需求响应</option>
+            <option value="carbon">🌱 虚拟碳信用</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <input type="number" id="sats" placeholder="投资金额 (sats)" value="100" min="10">
+        </div>
+        <button class="btn" onclick="generateInvoice()">⚡ 生成支付 Invoice</button>
+        
+        <div class="result" id="result">
+          <div>✅ Invoice 已生成！</div>
+          <pre id="invoiceText"></pre>
+          <div style="margin-top:10px;color:#888;font-size:0.8em;">复制上方 Invoice，使用任何 Lightning 钱包支付</div>
+        </div>
+      </div>
+    </div>
     
     <div class="footer">
-      Powered by Virtual Corp VPP | Lightning Network
+      Powered by Virtual Corp VPP | Lightning Network<br>
+      Demo Version - Vercel部署
     </div>
   </div>
   
   <script>
-    async function loadData() {
-      try {
-        const [indicesRes, statsRes] = await Promise.all([
-          fetch('/api?action=list'),
-          fetch('/api?action=stats')
-        ]);
-        
-        const indices = await indicesRes.json();
-        const stats = await statsRes.json();
-        
-        // 显示指数
-        let indicesHtml = '';
-        for (const [key, val] of Object.entries(indices.data)) {
-          indicesHtml += `
-            <div class="industry">
-              <span class="name">${val.name}</span>
-              <span class="index">${val.index}</span>
-              <span class="risk ${val.risk}">${val.risk}</span>
-            </div>
-          `;
-        }
-        document.getElementById('indices').innerHTML = indicesHtml;
-        
-        // 显示统计
-        document.getElementById('investors').textContent = stats.data.totalInvestors;
-        document.getElementById('invested').textContent = stats.data.totalInvested;
-        document.getElementById('revenue').textContent = '$' + stats.data.dailyRevenue.toFixed(0);
-        
-      } catch (e) {
-        console.error(e);
+    const API = '/api';
+    
+    async function loadIndices() {
+      const res = await fetch(`${API}?action=list`);
+      const data = await res.json();
+      
+      let html = '';
+      for (const [key, val] of Object.entries(data.data)) {
+        html += `
+          <div class="industry" onclick="loadIndices()">
+            <span class="ind-name">${val.name}</span>
+            <span class="ind-index">${val.index}</span>
+            <span class="ind-risk risk-${val.risk}">${val.risk}</span>
+          </div>
+        `;
       }
+      document.getElementById('indices').innerHTML = html;
     }
     
-    loadData();
-    setInterval(loadData, 30000);
+    async function loadStats() {
+      const res = await fetch(`${API}?action=stats`);
+      const data = await res.json();
+      
+      document.getElementById('investors').textContent = data.data.totalInvestors;
+      document.getElementById('invested').textContent = data.data.totalInvested;
+      document.getElementById('revenue').textContent = '$' + Math.floor(data.data.dailyRevenue);
+    }
+    
+    async function generateInvoice() {
+      const sats = document.getElementById('sats').value;
+      const industry = document.getElementById('industry').value;
+      
+      const btn = document.querySelector('.btn');
+      btn.disabled = true;
+      btn.textContent = '⏳ 生成中...';
+      
+      try {
+        const res = await fetch(`${API}?action=invoice&sats=${sats}&industry=${industry}`);
+        const data = await res.json();
+        
+        document.getElementById('result').classList.add('show');
+        document.getElementById('invoiceText').textContent = data.data.invoice;
+        
+        btn.textContent = '✅ 已生成！';
+      } catch (e) {
+        btn.textContent = '❌ 生成失败';
+      }
+      
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = '⚡ 重新生成支付 Invoice';
+      }, 3000);
+    }
+    
+    loadIndices();
+    loadStats();
+    setInterval(() => { loadIndices(); loadStats(); }, 30000);
   </script>
 </body>
 </html>
