@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>虚拟电厂 VPP - 投资系统</title>
+  <title>Virtual Corp VPP - 分布式能源投资平台</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
@@ -15,173 +15,168 @@
     }
     .container { max-width: 600px; margin: 0 auto; }
     
-    h1 { text-align: center; margin-bottom: 10px; font-size: 2em; }
+    h1 { text-align: center; margin-bottom: 5px; font-size: 1.8em; }
     h1 span { color: #f39c12; }
-    .subtitle { text-align: center; color: #888; margin-bottom: 30px; }
+    .subtitle { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.9em; }
     
     .card {
       background: rgba(255,255,255,0.08);
-      border-radius: 20px;
+      border-radius: 16px;
       padding: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.1);
     }
     
-    .card h2 { margin-bottom: 15px; font-size: 1.1em; color: #f39c12; }
+    .card h2 { margin-bottom: 12px; font-size: 1em; color: #f39c12; }
     
     .industry { 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
-      padding: 12px;
+      padding: 10px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
       cursor: pointer;
-      transition: background 0.2s;
     }
     .industry:hover { background: rgba(255,255,255,0.05); }
     .industry:last-child { border-bottom: none; }
-    .ind-name { font-weight: 500; }
-    .ind-index { font-size: 1.3em; color: #f39c12; font-weight: bold; }
+    
+    .ind-info { flex: 1; }
+    .ind-name { font-weight: 500; font-size: 0.95em; }
+    .ind-desc { color: #888; font-size: 0.75em; }
+    .ind-index { font-size: 1.2em; color: #f39c12; font-weight: bold; }
     .ind-risk { 
-      padding: 3px 10px; 
-      border-radius: 10px; 
-      font-size: 0.75em;
+      padding: 2px 8px; border-radius: 8px; font-size: 0.7em; margin-left: 10px;
     }
     .risk-high { background: #e74c3c; }
     .risk-medium { background: #f39c12; }
     .risk-low { background: #27ae60; }
     
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .stat { 
-      text-align: center; 
-      padding: 15px 10px; 
-      background: rgba(255,255,255,0.05); 
-      border-radius: 12px; 
-    }
-    .stat-value { font-size: 1.4em; color: #f39c12; font-weight: bold; }
-    .stat-label { color: #888; font-size: 0.8em; margin-top: 5px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat { text-align: center; padding: 12px 8px; background: rgba(255,255,255,0.05); border-radius: 10px; }
+    .stat-value { font-size: 1.2em; color: #f39c12; font-weight: bold; }
+    .stat-label { color: #888; font-size: 0.7em; margin-top: 3px; }
     
-    .invest-form { margin-top: 15px; }
-    .form-row { display: flex; gap: 10px; margin-bottom: 10px; }
-    select, input { 
+    .form-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    select, input, button { 
       flex: 1;
       padding: 12px;
       border: none;
       border-radius: 10px;
       background: rgba(255,255,255,0.1);
       color: #fff;
-      font-size: 1em;
+      font-size: 0.95em;
     }
     select option { background: #302b63; }
     
     .btn {
-      width: 100%;
-      padding: 14px;
       background: linear-gradient(135deg, #f39c12, #e67e22);
-      border: none;
-      border-radius: 12px;
       color: #fff;
-      font-size: 1em;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s;
     }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(243,156,18,0.3); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn:hover { transform: translateY(-2px); }
     
-    .result { 
-      margin-top: 15px; 
-      padding: 15px; 
-      background: rgba(39,174,96,0.2); 
-      border-radius: 10px;
-      display: none;
-    }
+    .result { margin-top: 12px; padding: 12px; background: rgba(39,174,96,0.2); border-radius: 10px; display: none; }
     .result.show { display: block; }
-    .result pre { 
-      font-size: 0.7em; 
-      word-break: break-all; 
-      background: rgba(0,0,0,0.3);
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
+    .result pre { font-size: 0.65em; word-break: break-all; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; margin-top: 8px; }
     
-    .footer { text-align: center; margin-top: 30px; color: #666; font-size: 0.8em; }
+    .portfolio { margin-top: 10px; }
+    .portfolio-item { padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 8px; }
+    .portfolio-item .ind { font-weight: bold; }
+    .portfolio-item .val { color: #f39c12; font-size: 0.9em; }
+    .portfolio-item .gain { font-size: 0.8em; }
+    .gain.pos { color: #27ae60; }
+    .gain.neg { color: #e74c3c; }
     
-    .loading { text-align: center; color: #888; padding: 20px; }
-    .refresh { 
-      text-align: center; 
-      margin-bottom: 20px; 
-      color: #666; 
-      font-size: 0.8em; 
-    }
+    .footer { text-align: center; margin-top: 25px; color: #666; font-size: 0.75em; }
+    
+    .tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+    .tab { flex: 1; padding: 10px; text-align: center; background: rgba(255,255,255,0.05); border-radius: 10px; cursor: pointer; }
+    .tab.active { background: #f39c12; color: #000; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>⚡ 虚拟电厂 <span>VPP</span></h1>
-    <p class="subtitle">分布式能源投资系统</p>
+    <h1>⚡ Virtual Corp <span>VPP</span></h1>
+    <p class="subtitle">分布式能源投资平台 | Lightning Powered</p>
     
-    <div class="refresh">点击指数刷新数据</div>
-    
-    <div class="card">
-      <h2>📊 能源指数</h2>
-      <div id="indices">
-        <div class="loading">加载中...</div>
-      </div>
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('invest')">投资</div>
+      <div class="tab" onclick="switchTab('portfolio')">我的组合</div>
+      <div class="tab" onclick="switchTab('stats')">统计</div>
     </div>
     
-    <div class="card">
-      <h2>📈 系统统计</h2>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-value" id="investors">-</div>
-          <div class="stat-label">投资者</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value" id="invested">-</div>
-          <div class="stat-label">总投资(sats)</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value" id="revenue">-</div>
-          <div class="stat-label">日收益($)</div>
-        </div>
+    <div class="tab-content active" id="tab-invest">
+      <div class="card">
+        <h2>📊 能源指数 (点击刷新)</h2>
+        <div id="indices"><div class="loading">加载中...</div></div>
       </div>
-    </div>
-    
-    <div class="card">
-      <h2>⚡ 投资</h2>
-      <div class="invest-form">
+      
+      <div class="card">
+        <h2>⚡ 投资</h2>
         <div class="form-row">
           <select id="industry">
             <option value="solar">☀️ 虚拟太阳能</option>
             <option value="storage">🔋 虚拟储能</option>
-            <option value="demand">⚡ 虚拟需求响应</option>
-            <option value="carbon">🌱 虚拟碳信用</option>
+            <option value="demand">⚡ 需求响应</option>
+            <option value="carbon">🌱 碳信用</option>
           </select>
         </div>
         <div class="form-row">
           <input type="number" id="sats" placeholder="投资金额 (sats)" value="100" min="10">
+          <input type="text" id="username" placeholder="用户名" value="vincentyy">
         </div>
-        <button class="btn" onclick="generateInvoice()">⚡ 生成支付 Invoice</button>
+        <button class="btn" onclick="doInvest()">⚡ 立即投资</button>
         
         <div class="result" id="result">
-          <div>✅ Invoice 已生成！</div>
-          <pre id="invoiceText"></pre>
-          <div style="margin-top:10px;color:#888;font-size:0.8em;">复制上方 Invoice，使用任何 Lightning 钱包支付</div>
+          <div>✅ 投资成功！</div>
+          <pre id="resultData"></pre>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="tab-portfolio">
+      <div class="card">
+        <h2>💼 我的投资组合</h2>
+        <div class="form-row">
+          <input type="text" id="pfUser" placeholder="用户名" value="vincentyy">
+          <button class="btn" onclick="loadPortfolio()" style="flex:0.5">查看</button>
+        </div>
+        <div id="portfolio"><div class="loading">输入用户名查看组合</div></div>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="tab-stats">
+      <div class="card">
+        <h2>📈 系统统计</h2>
+        <div class="stats">
+          <div class="stat"><div class="stat-value" id="statInvestors">-</div><div class="stat-label">投资者</div></div>
+          <div class="stat"><div class="stat-value" id="statInvested">-</div><div class="stat-label">总投资(sats)</div></div>
+          <div class="stat"><div class="stat-value" id="statRevenue">-</div><div class="stat-label">日收益($)</div></div>
         </div>
       </div>
     </div>
     
     <div class="footer">
       Powered by Virtual Corp VPP | Lightning Network<br>
-      Demo Version - Vercel部署
+      v2.0 - Multi-user Support
     </div>
   </div>
   
   <script>
     const API = '/api';
+    
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + tab).classList.add('active');
+      if(tab === 'stats') loadStats();
+    }
     
     async function loadIndices() {
       const res = await fetch(`${API}?action=list`);
@@ -191,7 +186,10 @@
       for (const [key, val] of Object.entries(data.data)) {
         html += `
           <div class="industry" onclick="loadIndices()">
-            <span class="ind-name">${val.name}</span>
+            <div class="ind-info">
+              <div class="ind-name">${val.name}</div>
+              <div class="ind-desc">${val.desc}</div>
+            </div>
             <span class="ind-index">${val.index}</span>
             <span class="ind-risk risk-${val.risk}">${val.risk}</span>
           </div>
@@ -200,44 +198,60 @@
       document.getElementById('indices').innerHTML = html;
     }
     
+    async function doInvest() {
+      const sats = document.getElementById('sats').value;
+      const industry = document.getElementById('industry').value;
+      const user = document.getElementById('username').value;
+      
+      const btn = document.querySelector('#tab-invest .btn');
+      btn.disabled = true; btn.textContent = '⏳ 投资中...';
+      
+      const res = await fetch(`${API}?action=invest&user=${user}&sats=${sats}&industry=${industry}`);
+      const data = await res.json();
+      
+      document.getElementById('result').classList.add('show');
+      document.getElementById('resultData').textContent = JSON.stringify(data, null, 2);
+      
+      btn.disabled = false; btn.textContent = '⚡ 立即投资';
+    }
+    
+    async function loadPortfolio() {
+      const user = document.getElementById('pfUser').value;
+      const res = await fetch(`${API}?action=portfolio&user=${user}`);
+      const data = await res.json();
+      
+      if (!data.success) {
+        document.getElementById('portfolio').innerHTML = '<div>用户不存在</div>';
+        return;
+      }
+      
+      let html = '';
+      data.data.portfolio.forEach(p => {
+        const gain = p.currentValue - p.sats;
+        const gainClass = gain >= 0 ? 'pos' : 'neg';
+        html += `
+          <div class="portfolio-item">
+            <div class="ind">${p.industry}</div>
+            <div class="val">${p.sats} sats → ${p.currentValue} sats</div>
+            <div class="gain ${gainClass}">${gain >= 0 ? '+' : ''}${gain} sats</div>
+          </div>
+        `;
+      });
+      
+      html += `<div style="margin-top:10px;font-weight:bold;">总价值: ${data.data.totalValue} sats</div>`;
+      document.getElementById('portfolio').innerHTML = html;
+    }
+    
     async function loadStats() {
       const res = await fetch(`${API}?action=stats`);
       const data = await res.json();
-      
-      document.getElementById('investors').textContent = data.data.totalInvestors;
-      document.getElementById('invested').textContent = data.data.totalInvested;
-      document.getElementById('revenue').textContent = '$' + Math.floor(data.data.dailyRevenue);
-    }
-    
-    async function generateInvoice() {
-      const sats = document.getElementById('sats').value;
-      const industry = document.getElementById('industry').value;
-      
-      const btn = document.querySelector('.btn');
-      btn.disabled = true;
-      btn.textContent = '⏳ 生成中...';
-      
-      try {
-        const res = await fetch(`${API}?action=invoice&sats=${sats}&industry=${industry}`);
-        const data = await res.json();
-        
-        document.getElementById('result').classList.add('show');
-        document.getElementById('invoiceText').textContent = data.data.invoice;
-        
-        btn.textContent = '✅ 已生成！';
-      } catch (e) {
-        btn.textContent = '❌ 生成失败';
-      }
-      
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = '⚡ 重新生成支付 Invoice';
-      }, 3000);
+      document.getElementById('statInvestors').textContent = data.data.totalInvestors;
+      document.getElementById('statInvested').textContent = data.data.totalInvested;
+      document.getElementById('statRevenue').textContent = '$' + Math.floor(data.data.dailyRevenue);
     }
     
     loadIndices();
-    loadStats();
-    setInterval(() => { loadIndices(); loadStats(); }, 30000);
+    setInterval(loadIndices, 30000);
   </script>
 </body>
 </html>
