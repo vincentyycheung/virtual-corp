@@ -1,0 +1,13 @@
+{
+  "name": "virtual-corp-vpp",
+  "version": "1.0.0",
+  "description": "虚拟电厂 VPP 投资系统",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "@getalby/sdk": "^3.0.0"
+  }
+}

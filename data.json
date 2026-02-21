@@ -1,0 +1,21 @@
+{
+  "users": {
+    "testuser": [
+      {
+        "industry": "hvac",
+        "sats": 100,
+        "index": "102.75",
+        "at": 1771686094311
+      }
+    ]
+  },
+  "transactions": [
+    {
+      "type": "buy",
+      "user": "testuser",
+      "industry": "hvac",
+      "sats": 100,
+      "at": 1771686094311
+    }
+  ]
+}

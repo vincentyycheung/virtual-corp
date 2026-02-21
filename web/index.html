@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虚拟电厂 VPP - 投资系统</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      color: #fff;
+      padding: 20px;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 { text-align: center; margin-bottom: 30px; font-size: 2.5em; }
+    h1 span { color: #f39c12; }
+    
+    .card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .industry { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .industry:last-child { border-bottom: none; }
+    .name { font-size: 1.2em; font-weight: bold; }
+    .index { font-size: 1.5em; color: #f39c12; }
+    .risk { padding: 4px 12px; border-radius: 12px; font-size: 0.8em; }
+    .risk.high { background: #e74c3c; }
+    .risk.medium { background: #f39c12; }
+    .risk.low { background: #27ae60; }
+    
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .stat { text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; }
+    .stat-value { font-size: 2em; color: #f39c12; }
+    .stat-label { color: #888; margin-top: 5px; }
+    
+    .invest-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    
+    .footer { text-align: center; margin-top: 30px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚡ 虚拟电厂 <span>VPP</span></h1>
+    
+    <div class="card">
+      <h2>能源指数</h2>
+      <div id="indices">加载中...</div>
+    </div>
+    
+    <div class="card">
+      <h2>系统统计</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value" id="investors">-</div>
+          <div class="stat-label">投资者</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="invested">-</div>
+          <div class="stat-label">总投资 (sats)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="revenue">-</div>
+          <div class="stat-label">日收益 ($)</div>
+        </div>
+      </div>
+    </div>
+    
+    <button class="invest-btn" onclick="alert('Lightning支付功能开发中...')">
+      ⚡ 立即投资 (Lightning)
+    </button>
+    
+    <div class="footer">
+      Powered by Virtual Corp VPP | Lightning Network
+    </div>
+  </div>
+  
+  <script>
+    async function loadData() {
+      try {
+        const [indicesRes, statsRes] = await Promise.all([
+          fetch('/api?action=list'),
+          fetch('/api?action=stats')
+        ]);
+        
+        const indices = await indicesRes.json();
+        const stats = await statsRes.json();
+        
+        // 显示指数
+        let indicesHtml = '';
+        for (const [key, val] of Object.entries(indices.data)) {
+          indicesHtml += `
+            <div class="industry">
+              <span class="name">${val.name}</span>
+              <span class="index">${val.index}</span>
+              <span class="risk ${val.risk}">${val.risk}</span>
+            </div>
+          `;
+        }
+        document.getElementById('indices').innerHTML = indicesHtml;
+        
+        // 显示统计
+        document.getElementById('investors').textContent = stats.data.totalInvestors;
+        document.getElementById('invested').textContent = stats.data.totalInvested;
+        document.getElementById('revenue').textContent = '$' + stats.data.dailyRevenue.toFixed(0);
+        
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    
+    loadData();
+    setInterval(loadData, 30000);
+  </script>
+</body>
+</html>

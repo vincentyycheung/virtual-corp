@@ -1,0 +1,17 @@
+{
+  "investors": {
+    "user1": {
+      "name": "vincentyy_",
+      "investments": [
+        {
+          "industry": "solar",
+          "sats": 100,
+          "index": 125.77,
+          "at": "2026-02-21T15:05:00Z",
+          "status": "active"
+        }
+      ]
+    }
+  },
+  "totalInvested": 100
+}
