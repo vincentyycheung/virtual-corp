@@ -11,5 +11,31 @@
         "share": "100.0%"
       }
     ]
+  },
+  {
+    "date": "2026-02-21",
+    "revenue": 51.22401152026029,
+    "dividendPool": 15.367203456078087,
+    "totalSatsDividend": 1536,
+    "dividends": [
+      {
+        "user": "vincentyy_",
+        "dividend": 1536,
+        "share": "100.0%"
+      }
+    ]
+  },
+  {
+    "date": "2026-02-22",
+    "revenue": 48.96627568415944,
+    "dividendPool": 14.689882705247832,
+    "totalSatsDividend": 1468,
+    "dividends": [
+      {
+        "user": "vincentyy_",
+        "dividend": 1468,
+        "share": "100.0%"
+      }
+    ]
   }
 ]
