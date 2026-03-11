@@ -9,9 +9,20 @@
           "index": 125.77,
           "at": "2026-02-21T15:05:00Z",
           "status": "active"
+        },
+        {
+          "industry": "dividend",
+          "sats": 1599,
+          "at": "2026-03-00:00Z11T08:",
+          "status": "active"
         }
       ]
     }
   },
-  "totalInvested": 100
+  "totalInvested": 100,
+  "lastDividend": {
+    "date": "2026-03-11T08:00:00Z",
+    "amount": 1599,
+    "recipient": "vincentyy_"
+  }
 }
