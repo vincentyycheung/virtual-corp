@@ -453,5 +453,57 @@
         "share": "100.0%"
       }
     ]
+  },
+  {
+    "date": "2026-03-10",
+    "revenue": 52.125722820528225,
+    "dividendPool": 15.637716846158467,
+    "totalSatsDividend": 1563,
+    "dividends": [
+      {
+        "user": "vincentyy_",
+        "dividend": 1563,
+        "share": "100.0%"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-11",
+    "revenue": 53.329971794669014,
+    "dividendPool": 15.998991538400704,
+    "totalSatsDividend": 1599,
+    "dividends": [
+      {
+        "user": "vincentyy_",
+        "dividend": 1599,
+        "share": "100.0%"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-12",
+    "revenue": 45.80229410383755,
+    "dividendPool": 13.740688231151266,
+    "totalSatsDividend": 1374,
+    "dividends": [
+      {
+        "user": "vincentyy_",
+        "dividend": 1374,
+        "share": "100.0%"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-12",
+    "revenue": 45.84021155095012,
+    "dividendPool": 13.752063465285037,
+    "totalSatsDividend": 1375,
+    "dividends": [
+      {
+        "user": "vincentyy_",
+        "dividend": 1375,
+        "share": "100.0%"
+      }
+    ]
   }
 ]

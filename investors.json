@@ -13,7 +13,7 @@
         {
           "industry": "dividend",
           "sats": 1599,
-          "at": "2026-03-00:00Z11T08:",
+          "at": "2026-03-00:00:00Z",
           "status": "active"
         }
       ]
@@ -21,8 +21,8 @@
   },
   "totalInvested": 100,
   "lastDividend": {
-    "date": "2026-03-11T08:00:00Z",
-    "amount": 1599,
+    "date": "2026-03-12T17:59:00Z",
+    "amount": 1375,
     "recipient": "vincentyy_"
   }
 }
